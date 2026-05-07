@@ -22,9 +22,6 @@ public class Main {
 
         // Получаем имя файла из переменной окружения
         String path = System.getenv("FILE_PATH");
-        if (path == null) {
-            path = "lab5_data.csv";
-        }
 
         // Инициализация основных компонентов
         Scanner scanner = new Scanner(System.in);
