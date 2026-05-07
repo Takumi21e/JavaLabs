@@ -87,7 +87,6 @@ public class FileManager {
                 }
             }
 
-            // синхронизация генератора id
             IdGenerator.update(maxId);
 
             System.out.println("Коллекция загружена. Элементов: " + collection.size());
