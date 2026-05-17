@@ -41,22 +41,6 @@ public class Product implements Comparable<Product>{
         this.partNumber = partNumber;
         this.unitOfMeasure = unitOfMeasure;
         this.owner = owner;
-
-        if (name == null || name.isEmpty()){
-            throw new IllegalArgumentException("Имя не может отсутствовать");
-        }
-        if (coordinates == null){
-            throw new IllegalArgumentException("Координаты не могут отсутствовать");
-        }
-        if (price == null || price <= 0) {
-            throw new IllegalArgumentException("Цена должна быть больше 0");
-        }
-        if (partNumber != null && partNumber.isEmpty()) {
-            throw new IllegalArgumentException("partNumber не может быть пустым, если он есть");
-        }
-        if (owner == null) {
-            throw new IllegalArgumentException("Владелец не может отсутствовать");
-        }
     }
 
     public Product(long id,
@@ -68,10 +52,6 @@ public class Product implements Comparable<Product>{
                    Person owner) {
         this(name, coordinates, price, partNumber, unitOfMeasure, owner);
         this.id = id;
-
-        if (id <= 0 ){
-            throw new IllegalArgumentException("id должен быть больше 0");
-        }
     }
 
     public long getId() {

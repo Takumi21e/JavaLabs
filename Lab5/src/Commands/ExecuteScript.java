@@ -33,8 +33,9 @@ public class ExecuteScript implements Command {
     }
     @Override
     public void execute(String[] args) {
+
         if (args.length < 2) {
-            System.out.println("Ошибка: укажите имя файла.");
+            System.out.println("Ошибка: не указано имя файла.");
             return;
         }
 
@@ -58,7 +59,6 @@ public class ExecuteScript implements Command {
                     continue;
                 }
                 System.out.println("> " + line);
-
                 try {
                     commandManager.execute(line);
                 } catch (Exception e) {

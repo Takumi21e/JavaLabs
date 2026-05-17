@@ -2,6 +2,7 @@ import Commands.*;
 import Managers.*;
 import Managers.InputManager;
 
+import java.io.File;
 import java.util.Scanner;
 
 
@@ -22,20 +23,29 @@ public class Main {
 
         // Получаем имя файла из переменной окружения
         String path = System.getenv("FILE_PATH");
+        if (path == null){
+            path = "lab5_data.csv";
+            System.out.println("Переменная окружения не задана. Использован файл по умолчанию (lab5_data.csv)");
+        } else {
+            System.out.println("Задана переменная окружения: " + path);
+        }
+
+        File file = new File(path);
+        if (!file.exists()){
+            System.out.println("Не удается найти указанный файл.");
+            System.exit(0);
+        }
 
         // Инициализация основных компонентов
         Scanner scanner = new Scanner(System.in);
         CollectionManager collectionManager = new CollectionManager();
-        CommandManager commandManager = new CommandManager();
+       CommandManager commandManager = new CommandManager();
         InputManager inputManager = new InputManager(scanner);
         commandManager.setInputManager(inputManager);
         FileManager fileManager = new FileManager(path);
 
         // Загрузка данных из файла
         collectionManager.getAll().addAll(fileManager.load());
-
-        // Создаём exit отдельно
-        Exit exitCommand = new Exit();
 
         // Регистрация команд
         commandManager.register(new Help(commandManager));
@@ -53,11 +63,11 @@ public class Main {
         commandManager.register(new FilterGreaterThanPartNumber(collectionManager));
         commandManager.register(new Shuffle(collectionManager));
         commandManager.register(new FilterLessThanOwner(collectionManager));
+        Exit exitCommand = new Exit();
         commandManager.register(exitCommand);
 
         // Основной цикл
         System.out.println("Программа запущена.");
-
         while (true) {
             try {
                 System.out.print("Введите команду> ");

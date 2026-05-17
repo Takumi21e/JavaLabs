@@ -14,7 +14,6 @@ import java.util.Stack;
 
 /**
  * Отвечает за работу с файлами.
- *
  * Обеспечивает:
  * - чтение коллекции из CSV
  * - запись коллекции в файл
@@ -27,12 +26,12 @@ public class FileManager {
         this.fileName = fileName;
     }
 
+
     /**
      * Отвечает за сохранение в файл
      */
     public void save(Stack<Product> collection) {
-        try (OutputStreamWriter writer =
-                     new OutputStreamWriter(new FileOutputStream(fileName))) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(fileName))) {
 
             for (Product p : collection) {
                 writer.write(toCSV(p) + "\n");
@@ -46,14 +45,14 @@ public class FileManager {
 
     private String toCSV(Product p) {
         return p.getId() + "," +
-                p.getName() + "," +
+                shield(p.getName()) + "," +
                 p.getCoordinates().getX() + "," +
                 p.getCoordinates().getY() + "," +
                 p.getCreationDate().getTime() + "," +
                 p.getPrice() + "," +
-                nullSafe(p.getPartNumber()) + "," +
+                shield(nullSafe(p.getPartNumber())) + "," +
                 nullSafe(p.getUnitOfMeasure()) + "," +
-                p.getOwner().getName() + "," +
+                shield(p.getOwner().getName()) + "," +
                 p.getOwner().getBirthday() + "," +
                 p.getOwner().getHeight() + "," +
                 nullSafe(p.getOwner().getWeight()) + "," +
@@ -70,8 +69,7 @@ public class FileManager {
     public Stack<Product> load() {
         Stack<Product> collection = new Stack<>();
 
-        try (BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(new FileInputStream(fileName)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)))) {
 
             String line;
             long maxId = 0;
@@ -107,29 +105,26 @@ public class FileManager {
         String[] parts = line.split(",", -1); // -1 сохраняет пустые поля
 
         long id = Long.parseLong(parts[0]);
-        String name = parts[1];
+        String name = unshield(parts[1]);
 
         double x = Double.parseDouble(parts[2]);
         float y = Float.parseFloat(parts[3]);
+        Coordinates coordinates = new Coordinates(x, y);
 
         long creationTime = Long.parseLong(parts[4]); // можно игнорировать
 
         Long price = Long.parseLong(parts[5]);
-
-        String partNumber = parts[6].isEmpty() ? null : parts[6];
-
+        String partNumber = parts[6].isEmpty() ? null : unshield(parts[6]);
         UnitOfMeasure uom = parts[7].isEmpty() ? null : UnitOfMeasure.valueOf(parts[7]);
 
-        String ownerName = parts[8];
+        String ownerName = unshield(parts[8]);
         LocalDate birthday = LocalDate.parse(parts[9]);
         long height = Long.parseLong(parts[10]);
         Long weight = parts[11].isEmpty() ? null : Long.parseLong(parts[11]);
         Country nationality = parts[12].isEmpty() ? null : Country.valueOf(parts[12]);
 
-        Coordinates coordinates = new Coordinates(x, y);
         Person owner = new Person(ownerName, birthday, height, weight, nationality);
 
-        // используем конструктор с id
         return new Product(
                 id,
                 name,
@@ -139,5 +134,19 @@ public class FileManager {
                 uom,
                 owner
         );
+    }
+
+    private String shield(String str) {
+        if (str == null) {
+            return "";
+        }
+        return str.replace(",","<COMMA>").replace("\\","<SLASH>");
+    }
+
+    private String unshield(String str) {
+        if (str.equals("")) {
+            return null;
+        }
+        return str.replace("<COMMA>",",").replace("<SLASH>","\\");
     }
 }
