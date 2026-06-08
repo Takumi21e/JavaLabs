@@ -4,7 +4,12 @@ import common.model.Product;
 import common.network.Request;
 import common.network.Response;
 import server.collection.CollectionManager;
+import java.util.stream.Collectors;
 
+/**
+ * Обработчик команды SHOW.
+ * Выводит все элементы коллекции в отсортированном виде.
+ */
 public class ShowHandler implements CommandHandler {
 
     private final CollectionManager collectionManager;
@@ -13,6 +18,13 @@ public class ShowHandler implements CommandHandler {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Выполняет команду show - выводит все элементы коллекции,
+     * отсортированные по умолчанию (по цене).
+     *
+     * @param request запрос
+     * @return ответ с выводом элементов
+     */
     @Override
     public Response execute(Request request) {
 
@@ -20,10 +32,13 @@ public class ShowHandler implements CommandHandler {
             return new Response(true, "Коллекция пуста.");
         }
 
-        StringBuilder builder = new StringBuilder();
-        for (Product product : collectionManager.getCollection()) {
-            builder.append(product).append("\n");
-        }
-        return new Response(true, builder.toString());
+        String result = collectionManager
+                .getCollection()
+                .stream()
+                .sorted(Product::compareTo)
+                .map(Product::toString)
+                .collect(Collectors.joining("\n\n"));
+
+        return new Response(true, result);
     }
 }
