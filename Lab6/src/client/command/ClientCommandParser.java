@@ -4,22 +4,33 @@ import client.console.InputManager;
 import common.network.CommandType;
 import common.network.Request;
 
+/**
+ * Парсер команд клиента.
+ * Преобразует строки, введённые пользователем, в Request объекты.
+ */
 public class ClientCommandParser {
 
     private final InputManager inputManager;
 
-    public ClientCommandParser(
-            InputManager inputManager
-    ) {
+    public ClientCommandParser(InputManager inputManager) {
         this.inputManager = inputManager;
     }
 
+    /**
+     * Парсит команду и возвращает Request объект.
+     *
+     * @param line введённая строка команды
+     * @return объект Request или null если команда не распознана
+     */
     public Request parse(String line) {
 
         String[] parts = line.trim().split("\\s+");
         String command = parts[0].toLowerCase();
 
         switch (command) {
+
+            case "help":
+                return new Request(CommandType.HELP);
 
             case "info":
                 return new Request(CommandType.INFO);
@@ -31,7 +42,6 @@ public class ClientCommandParser {
                 return new Request(CommandType.CLEAR);
 
             case "add":
-
                 Request request = new Request(CommandType.ADD);
                 request.setProduct(inputManager.readProduct());
                 return request;
