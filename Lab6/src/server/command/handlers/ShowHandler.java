@@ -18,6 +18,16 @@ public class ShowHandler implements CommandHandler {
         this.collectionManager = collectionManager;
     }
 
+    @Override
+    public String getName() {
+        return "show";
+    }
+
+    @Override
+    public String getDescription() {
+        return "вывести все элементы коллекции";
+    }
+
     /**
      * Выполняет команду show - выводит все элементы коллекции,
      * отсортированные по умолчанию (по цене).

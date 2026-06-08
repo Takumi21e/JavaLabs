@@ -4,9 +4,13 @@ import common.model.Product;
 import common.network.Request;
 import common.network.Response;
 import server.collection.CollectionManager;
+import java.util.stream.Collectors;
 
-public class RemoveGreaterHandler
-        implements CommandHandler {
+/**
+ * Обработчик команды REMOVE_GREATER.
+ * Удаляет все элементы, превышающие заданный.
+ */
+public class RemoveGreaterHandler implements CommandHandler {
 
     private final CollectionManager collectionManager;
 
@@ -15,18 +19,43 @@ public class RemoveGreaterHandler
     }
 
     @Override
+    public String getName() {
+        return "remove_greater";
+    }
+
+    @Override
+    public String getDescription() {
+        return "удалить все элементы, превышающие заданный";
+    }
+
+    /**
+     * Выполняет команду remove_greater - удаляет все элементы,
+     * чье значение больше заданного.
+     *
+     * @param request запрос с данными продукта для сравнения
+     * @return ответ с ре��ультатом
+     */
+    @Override
     public Response execute(Request request) {
 
-        Product reference = request.getProduct();
+        try {
 
-        if (reference == null) {
-            return new Response(false, "Продукт не передан.");
+            Product product = request.getProduct();
+
+            if (product == null) {
+                return new Response(false, "Продукт не передан.");
+            }
+
+            int before = collectionManager.size();
+
+            collectionManager.getCollection().removeIf(target -> target.compareTo(product) > 0);
+
+            int after = collectionManager.size();
+
+            return new Response(true, "Удалено элементов: " + (before - after));
+
+        } catch (Exception e) {
+            return new Response(false, "Ошибка при удалении: " + e.getMessage());
         }
-
-        int before = collectionManager.getCollection().size();
-        collectionManager.getCollection().removeIf(product -> product.compareTo(reference) > 0);
-        int removed = before - collectionManager.getCollection().size();
-
-        return new Response(true, "Удалено элементов: " + removed);
     }
 }

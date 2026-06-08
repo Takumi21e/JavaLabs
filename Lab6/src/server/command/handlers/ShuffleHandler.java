@@ -4,8 +4,10 @@ import common.network.Request;
 import common.network.Response;
 import server.collection.CollectionManager;
 
-import java.util.Collections;
-
+/**
+ * Обработчик команды SHUFFLE.
+ * Перемешивает элементы коллекции в случайном порядке.
+ */
 public class ShuffleHandler implements CommandHandler {
 
     private final CollectionManager collectionManager;
@@ -15,8 +17,26 @@ public class ShuffleHandler implements CommandHandler {
     }
 
     @Override
+    public String getName() {
+        return "shuffle";
+    }
+
+    @Override
+    public String getDescription() {
+        return "перемешать элементы коллекции";
+    }
+
+    /**
+     * Выполняет команду shuffle - перемешивает элементы в случайном порядке.
+     *
+     * @param request запрос
+     * @return ответ с результатом
+     */
+    @Override
     public Response execute(Request request) {
-        Collections.shuffle(collectionManager.getCollection());
+
+        collectionManager.shuffle();
+
         return new Response(true, "Коллекция перемешана.");
     }
 }

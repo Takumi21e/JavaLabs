@@ -4,6 +4,10 @@ import common.network.Request;
 import common.network.Response;
 import server.collection.CollectionManager;
 
+/**
+ * Обработчик команды INFO.
+ * Выводит информацию о коллекции.
+ */
 public class InfoHandler implements CommandHandler {
 
     private final CollectionManager collectionManager;
@@ -12,6 +16,22 @@ public class InfoHandler implements CommandHandler {
         this.collectionManager = collectionManager;
     }
 
+    @Override
+    public String getName() {
+        return "info";
+    }
+
+    @Override
+    public String getDescription() {
+        return "вывести информацию о коллекции";
+    }
+
+    /**
+     * Выполняет команду info - выводит информацию о коллекции.
+     *
+     * @param request запрос
+     * @return ответ с информацией
+     */
     @Override
     public Response execute(Request request) {
 

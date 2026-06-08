@@ -5,10 +5,12 @@ import common.network.Request;
 import common.network.Response;
 import server.collection.CollectionManager;
 import server.collection.IdGenerator;
-
-import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Обработчик команды ADD_IF_MAX.
+ * Добавляет элемент, если он больше максимального.
+ */
 public class AddIfMaxHandler implements CommandHandler {
 
     private final CollectionManager collectionManager;
@@ -17,6 +19,23 @@ public class AddIfMaxHandler implements CommandHandler {
         this.collectionManager = collectionManager;
     }
 
+    @Override
+    public String getName() {
+        return "add_if_max";
+    }
+
+    @Override
+    public String getDescription() {
+        return "добавить элемент, если он больше максимального";
+    }
+
+    /**
+     * Выполняет команду add_if_max - добавляет элемент,
+     * если его значение больше максимального в коллекции.
+     *
+     * @param request запрос с данными продукта
+     * @return ответ с результатом
+     */
     @Override
     public Response execute(Request request) {
 
