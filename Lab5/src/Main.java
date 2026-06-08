@@ -39,7 +39,7 @@ public class Main {
         // Инициализация основных компонентов
         Scanner scanner = new Scanner(System.in);
         CollectionManager collectionManager = new CollectionManager();
-       CommandManager commandManager = new CommandManager();
+        CommandManager commandManager = new CommandManager();
         InputManager inputManager = new InputManager(scanner);
         commandManager.setInputManager(inputManager);
         FileManager fileManager = new FileManager(path);
