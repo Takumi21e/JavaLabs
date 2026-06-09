@@ -45,11 +45,7 @@ public class AddIfMax implements Command {
             return new Response("Продукт не передан.");
         }
 
-        Product maxProduct = collectionManager
-                        .getCollection()
-                        .stream()
-                        .max(Product::compareTo)
-                        .orElse(null);
+        Product maxProduct = collectionManager.getMax();
 
         boolean shouldAdd = maxProduct == null || product.compareTo(maxProduct) > 0;
 

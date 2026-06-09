@@ -1,6 +1,7 @@
 package Server;
 
 import Common.Network.*;
+import Server.Commands.*;
 import Server.Managers.*;
 import Server.Network.*;
 
@@ -26,7 +27,23 @@ public class ServerMain {
                                 fileManager.save(collectionManager.getCollection());
                             }));
 
-            CommandManager commandManager = new CommandManager(collectionManager);
+            CommandManager commandManager = new CommandManager();
+
+            commandManager.register(new Help(commandManager));
+            commandManager.register(new Show(collectionManager));
+            commandManager.register(new Add(collectionManager));
+            commandManager.register(new Info(collectionManager));
+            commandManager.register(new RemoveById(collectionManager));
+            commandManager.register(new Clear(collectionManager));
+            commandManager.register(new Update(collectionManager));
+            commandManager.register(new AddIfMax(collectionManager));
+            commandManager.register(new RemoveGreater(collectionManager));
+            commandManager.register(new FilterByOwner(collectionManager));
+            commandManager.register(new FilterGreaterThanPartNumber(collectionManager));
+            commandManager.register(new Shuffle(collectionManager));
+            commandManager.register(new FilterLessThanOwner(collectionManager));
+            commandManager.register(new Save(collectionManager, fileManager));
+
             ConnectionReceiver receiver = new ConnectionReceiver(5555);
             System.out.println("Сервер запущен на порту: " + receiver.getPort());
 

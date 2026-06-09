@@ -36,17 +36,11 @@ public class Info implements Command {
     public Response execute(Request request) {
 
         String result = "Тип коллекции: "
-                        + collectionManager
-                        .getCollection()
-                        .getClass()
-                        .getSimpleName()
+                        + collectionManager.getCollection().getClass().getSimpleName()
                         + "\nКоличество элементов: "
-                        + collectionManager
-                        .getCollection()
-                        .size()
+                        + collectionManager.getCollection().size()
                         + "\nДата инициализации: "
-                        + collectionManager
-                        .getInitializationDate();
+                        + collectionManager.getInitializationDate();
 
         return new Response(result);
     }

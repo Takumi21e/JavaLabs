@@ -2,12 +2,19 @@ package Server.Commands;
 
 import Common.Network.Request;
 import Common.Network.Response;
+import Server.Managers.CommandManager;
 
 /**
  * Обработчик команды HELP.
  * Выводит справку по доступным командам.
  */
 public class Help implements Command {
+
+    private CommandManager commandManager;
+
+    public Help(CommandManager commandManager) {
+        this.commandManager = commandManager;
+    }
 
     @Override
     public String getName() {
@@ -25,23 +32,13 @@ public class Help implements Command {
      * @return ответ со справкой
      */
     @Override
-    public Response execute(Request request) {
-        String help = "Доступные команды:\n" +
-                "  help - вывести справку по командам\n" +
-                "  info - информация о коллекции\n" +
-                "  show - вывести все элементы коллекции (отсортированы)\n" +
-                "  add - добавить новый элемент\n" +
-                "  update id - обновить элемент по id\n" +
-                "  remove_by_id id - удалить элемент по id\n" +
-                "  clear - очистить коллекцию\n" +
-                "  add_if_max - добавить, если это максимальный элемент\n" +
-                "  remove_greater - удалить все элементы, превышающие заданный\n" +
-                "  shuffle - перемешать элементы коллекции\n" +
-                "  filter_by_owner owner - фильтровать по владельцу\n" +
-                "  filter_less_than_owner owner - элементы с владельцем меньше заданного\n" +
-                "  filter_greater_than_part_number partNumber - элементы с номером партии больше заданного\n" +
-                "  save - сохранить коллекцию в файл (только сервер)";
+    public Response execute(Request request){
 
-        return new Response(help);
+        StringBuilder response = new StringBuilder("Доступные команды:\n");
+        commandManager.getCommands().forEach((string, command) ->
+                response.append(command.getName()).append(" - ")
+                        .append(command.getDescription()).append("\n"));
+
+    return new Response(response.toString());
     }
 }

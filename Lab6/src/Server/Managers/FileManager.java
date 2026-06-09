@@ -100,7 +100,7 @@ public class FileManager {
     }
 
     /**
-     * Парсинг строки CSV → Product
+     * Парсинг строки из CSV в объект Product
      */
     private Product fromCSV(String line) {
         String[] parts = line.split(",", -1); // -1 сохраняет пустые поля
