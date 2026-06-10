@@ -21,13 +21,29 @@ import java.util.Scanner;
  */
 public class ClientMain {
 
+    private static String serverHost = "localhost";
+    private static int serverPort = 5555;
+
     public static void main(String[] args) {
+
+        // Парсинг аргументов: java -jar client.jar <host> [port]
+        if (args.length > 0) {
+            serverHost = args[0];
+        }
+        if (args.length > 1) {
+            try {
+                serverPort = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
         ScannerManager scannerManager = new ScannerManager();
         InputManager inputManager = new InputManager(scannerManager.getScanner());
         RequestMaker requestMaker = new RequestMaker(inputManager);
 
-        System.out.println("Клиент запущен. Введите 'help' для справки или 'exit' для выхода.");
+        System.out.println("Клиент запущен. Сервер: " + serverHost + ":" + serverPort);
+        System.out.println("Введите 'help' для справки или 'exit' для выхода.");
 
         while (true) {
 
@@ -53,7 +69,7 @@ public class ClientMain {
 
             try {
 
-                RequestSender.sendRequest("localhost", 5555, request);
+                RequestSender.sendRequest(serverHost, serverPort, request);
 
             } catch (Exception e) {
                 System.out.println("Ошибка при отправке команды: " + e.getMessage());
@@ -105,7 +121,7 @@ public class ClientMain {
                     System.exit(0);
                 }
 
-                RequestSender.sendRequest("localhost", 5555, scRequest);
+                RequestSender.sendRequest(serverHost, serverPort, scRequest);
 
             }
         } catch (FileNotFoundException e) {

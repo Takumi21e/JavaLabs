@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- Вывод в консоль -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Вывод в файл (в папку logs) -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/server.log</file>
         <encoder>
+            <charset>UTF-8</charset>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -19,13 +18,17 @@
         </rollingPolicy>
     </appender>
 
-    <!-- Корневой логгер: уровень INFO, пишем и в консоль, и в файл -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>
 
-    <!-- Дополнительно: для пакета Server.Modules поставим DEBUG, чтобы видеть получение/отправку -->
-    <logger name="Server.Modules" level="DEBUG"/>
-    <logger name="Server.Managers" level="DEBUG"/>
+    <logger name="Server.Modules" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="Server.Managers" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </logger>
 </configuration>
