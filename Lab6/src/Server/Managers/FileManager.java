@@ -2,6 +2,9 @@ package Server.Managers;
 
 import Common.Model.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -21,6 +24,7 @@ import java.util.Stack;
  */
 public class FileManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(FileManager.class);
     private final String fileName;
 
     public FileManager(String fileName) {
@@ -37,10 +41,10 @@ public class FileManager {
             for (Product p : collection) {
                 writer.write(toCSV(p) + "\n");
             }
-            System.out.println("Коллекция сохранена.");
+            logger.info("Коллекция сохранена в файл {}. Количество записей: {}", fileName, collection.size());
 
         } catch (IOException e) {
-            System.out.println("Ошибка записи в файл: " + e.getMessage());
+            logger.error("Ошибка записи в файл " + fileName, e);
         }
     }
 
@@ -87,13 +91,12 @@ public class FileManager {
             }
 
             IdGenerator.update(maxId);
-
-            System.out.println("Коллекция загружена. Элементов: " + collection.size());
+            logger.info("Загрузка из файла {} завершена. Загружено элементов: {}", fileName, collection.size());
 
         } catch (IOException e) {
-            System.out.println("Ошибка чтения файла: " + e.getMessage());
+            logger.error("Ошибка чтения файла " + fileName, e);
         } catch (Exception e) {
-            System.out.println("Ошибка формата данных: " + e.getMessage());
+            logger.error("Ошибка формата данных в файле " + fileName, e);
         }
 
         return collection;

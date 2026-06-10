@@ -6,7 +6,6 @@ import Common.Network.Request;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -131,8 +130,36 @@ public class RequestMaker {
                 System.out.println("Команда 'save' доступна только серверу.");
                 return new Request("undefined");
 
+            case "execute_script":
+                if (parts.length != 2) {
+                    System.out.println("Некорректный ввод: execute_script <filename>");
+                    return new Request("undefined");
+                }
+                File file = new File(parts[1]);
+                if (!file.exists()) {
+                    System.out.println("Файл не найден: " + parts[1]);
+                    return new Request("undefined");
+                }
+                try {
+                    String scriptPath = file.getCanonicalPath();
+                    Request requestScript = new Request("execute_script");
+                    requestScript.setStringArgument(scriptPath);
+                    return requestScript;   // Будет обработан локально в ClientMain
+                } catch (IOException e) {
+                    System.out.println("Ошибка пути: " + e.getMessage());
+                    return new Request("undefined");
+                }
+
             default:
                 return null;
         }
+    }
+
+    public static boolean tryStartScript(String path) {
+        return executingScripts.add(path);
+    }
+
+    public static void endScript(String path) {
+        executingScripts.remove(path);
     }
 }

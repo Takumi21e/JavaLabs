@@ -1,12 +1,5 @@
-add
-Телефон
-12.5
-30.0
-15000
-PN-001
-PCS
-Иван
-1990-05-15
-180
-75
-GERMANY
+info
+show
+remove_by_id 99
+shuffle
+filter_by_owner Alice
