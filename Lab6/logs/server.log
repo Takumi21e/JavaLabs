@@ -1,0 +1,23 @@
+2026-06-10 18:26:24.298 [main] INFO  Server.ServerMain - Переменная окружения FILE_PATH не задана. Используется файл по умолчанию: lab6_data.csv
+2026-06-10 18:26:24.305 [main] INFO  Server.Managers.FileManager - Загрузка из файла lab6_data.csv завершена. Загружено элементов: 26
+2026-06-10 18:26:24.306 [main] INFO  Server.ServerMain - Коллекция загружена. Количество элементов: 26
+2026-06-10 18:26:24.314 [main] INFO  Server.ServerMain - Сервер запущен на порту: 5555
+2026-06-10 18:28:08.198 [Thread-0] INFO  Server.ServerMain - Завершение работы сервера. Сохранение коллекции...
+2026-06-10 18:28:08.210 [Thread-0] INFO  Server.Managers.FileManager - Коллекция сохранена в файл lab6_data.csv. Количество записей: 26
+2026-06-10 18:28:08.210 [Thread-0] INFO  Server.ServerMain - Коллекция сохранена. Сервер остановлен.
+2026-06-10 18:29:07.271 [main] INFO  Server.ServerMain - Переменная окружения FILE_PATH не задана. Используется файл по умолчанию: lab6_data.csv
+2026-06-10 18:29:07.279 [main] INFO  Server.Managers.FileManager - Загрузка из файла lab6_data.csv завершена. Загружено элементов: 26
+2026-06-10 18:29:07.279 [main] INFO  Server.ServerMain - Коллекция загружена. Количество элементов: 26
+2026-06-10 18:29:07.287 [main] INFO  Server.ServerMain - Сервер запущен на порту: 5555
+2026-06-10 18:29:34.138 [main] DEBUG Server.Network.RequestReader - Получен пакет от адреса: /127.0.0.1:56056
+2026-06-10 18:29:34.156 [main] DEBUG Server.Network.RequestReader - Запрос десериализован, команда: help
+2026-06-10 18:29:34.159 [main] DEBUG Server.Network.ResponseSender - Ответ отправлен адресату: /127.0.0.1:56056
+2026-06-10 18:31:17.716 [Thread-1] INFO  Server.ServerMain - Получена серверная команда save. Сохранение...
+2026-06-10 18:31:17.728 [Thread-1] INFO  Server.Managers.FileManager - Коллекция сохранена в файл lab6_data.csv. Количество записей: 26
+2026-06-10 18:31:17.728 [Thread-1] INFO  Server.ServerMain - Сохранение завершено.
+2026-06-10 18:31:45.052 [Thread-1] WARN  Server.ServerMain - Неизвестная серверная команда: 
+2026-06-10 18:31:49.782 [Thread-1] WARN  Server.ServerMain - Неизвестная серверная команда: sdfgsdg
+2026-06-10 18:31:53.926 [Thread-1] INFO  Server.ServerMain - Получена серверная команда exit. Завершение...
+2026-06-10 18:31:53.927 [Thread-0] INFO  Server.ServerMain - Завершение работы сервера. Сохранение коллекции...
+2026-06-10 18:31:53.928 [Thread-0] INFO  Server.Managers.FileManager - Коллекция сохранена в файл lab6_data.csv. Количество записей: 26
+2026-06-10 18:31:53.929 [Thread-0] INFO  Server.ServerMain - Коллекция сохранена. Сервер остановлен.
