@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import Common.Network.*;
 import Server.Commands.*;
 import Server.Managers.*;
-import Server.Network.*;
+import Server.Modules.*;
 
 import java.util.Scanner;
 
@@ -61,6 +61,7 @@ public class ServerMain {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     String input = scanner.nextLine().trim().toLowerCase();
+                    if (input.isEmpty()) continue;
                     if (input.equals("save")) {
                         logger.info("Получена серверная команда save. Сохранение...");
                         fileManager.save(collectionManager.getCollection());
@@ -81,7 +82,10 @@ public class ServerMain {
 
                 RequestData data = RequestReader.read(receiver.getChannel());
 
-                if (data == null) continue;
+                if (data == null) {
+                    Thread.sleep(10);
+                    continue;
+                }
 
                 logger.debug("Получен запрос от клиента {}: команда {}", data.getClientAddress(), data.getRequest().getCommandName());
                 Response response = commandManager.execute(data.getRequest());

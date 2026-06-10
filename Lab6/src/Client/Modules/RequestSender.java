@@ -1,4 +1,4 @@
-package Client;
+package Client.Modules;
 
 import Common.Network.*;
 

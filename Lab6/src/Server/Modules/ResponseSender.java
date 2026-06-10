@@ -1,4 +1,4 @@
-package Server.Network;
+package Server.Modules;
 
 import Common.Network.Response;
 import Common.Network.Serialization;

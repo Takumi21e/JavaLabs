@@ -2,6 +2,8 @@ package Client;
 
 import Client.Managers.ScannerManager;
 import Client.Managers.InputManager;
+import Client.Modules.RequestMaker;
+import Client.Modules.RequestSender;
 import Common.Network.Request;
 
 import java.io.File;
@@ -81,7 +83,6 @@ public class ClientMain {
                         || cmd.equals("update")
                         || cmd.equals("add_if_max")
                         || cmd.equals("remove_greater")) {
-                    System.out.println("Пропуск команды '" + cmd + "' в скрипте (требует ввода объекта).");
                     continue;
                 }
 

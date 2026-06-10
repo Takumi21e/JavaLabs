@@ -25,7 +25,7 @@
         <appender-ref ref="FILE" />
     </root>
 
-    <!-- Дополнительно: для пакета Server.Network поставим DEBUG, чтобы видеть получение/отправку -->
-    <logger name="Server.Network" level="DEBUG"/>
+    <!-- Дополнительно: для пакета Server.Modules поставим DEBUG, чтобы видеть получение/отправку -->
+    <logger name="Server.Modules" level="DEBUG"/>
     <logger name="Server.Managers" level="DEBUG"/>
 </configuration>

@@ -1,4 +1,4 @@
-package Client;
+package Client.Modules;
 
 import Client.Managers.InputManager;
 import Common.Network.Request;

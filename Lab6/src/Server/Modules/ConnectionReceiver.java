@@ -1,4 +1,4 @@
-package Server.Network;
+package Server.Modules;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
