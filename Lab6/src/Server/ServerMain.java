@@ -53,7 +53,7 @@ public class ServerMain {
             commandManager.register(new FilterLessThanOwner(collectionManager));
             commandManager.register(new Save(collectionManager, fileManager));
 
-            ConnectionReceiver receiver = new ConnectionReceiver(5555);
+            ConnectionReceiver receiver = new ConnectionReceiver(4235);
             logger.info("Сервер запущен на порту: {}", receiver.getPort());
 
             // Поток для чтения команд сервера из консоли
@@ -74,7 +74,7 @@ public class ServerMain {
                     }
                 }
             });
-            consoleThread.setDaemon(true); // чтобы не мешал завершению
+            consoleThread.setDaemon(true);
             consoleThread.start();
 
             // Основной цикл обработки клиентских запросов
